@@ -1,4 +1,4 @@
-import Fastify, { FastifyReply, FastifyRequest } from 'fastify'
+import Fastify, { FastifyReply } from 'fastify'
 import Postgrator from 'postgrator'
 import { CreateProductInput, GetProductInput, ProductController } from './controllers/product.controller'
 import { mongoose } from './infrastructure/mongo.client'
