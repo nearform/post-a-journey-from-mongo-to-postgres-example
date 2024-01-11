@@ -1,8 +1,8 @@
 import crypto from 'node:crypto'
-import SQL from "@nearform/sql"
-import { mongoose } from "../infrastructure/mongo.client"
-import { postgres } from "../infrastructure/postgres.client"
-import { Product } from "../repositories/mongo/product.repository"
+import SQL from '@nearform/sql'
+import { mongoose } from '../infrastructure/mongo.client'
+import { postgres } from '../infrastructure/postgres.client'
+import { Product } from '../models/product.model'
 
 (async () => {
   console.log('Starting database migration')

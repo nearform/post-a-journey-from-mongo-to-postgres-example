@@ -1,30 +1,15 @@
 import crypto from 'node:crypto'
 import SQL from '@nearform/sql'
-import { postgres } from '../../infrastructure/postgres.client'
-import { Nullable } from '../nullable.type'
+import { Nullable } from '../../types/nullable.type'
 import { Repository } from '../repository.interface'
-
-type Product = {
-  id: string
-  name: string
-}
-
-
+import { Client } from 'pg'
+import { Product } from '../../types/product.type'
 
 export class ProductRepository implements Repository<Product> {
-  constructor() {
-    (async () => {
-      postgres.query(SQL`
-        CREATE TABLE IF NOT EXISTS products (
-          id UUID PRIMARY KEY NOT NULL,
-          name VARCHAR(120) NOT NULL
-        )
-      `)
-    })()
-  }
+  constructor(private readonly database: Client) {}
 
   async create(product: { name: string }): Promise<Product> {
-    const result = await postgres.query(SQL`INSERT INTO products (id, name) VALUES (${crypto.randomUUID()}, ${product.name}) RETURNING *`)
+    const result = await this.database.query(SQL`INSERT INTO products (id, name) VALUES (${crypto.randomUUID()}, ${product.name}) RETURNING *`)
     
     return {
       id: result.rows[0].id,
@@ -33,7 +18,7 @@ export class ProductRepository implements Repository<Product> {
   }
 
   async getById(id: string): Promise<Nullable<Product>> {
-    const result = await postgres.query(SQL`SELECT p.* FROM products p WHERE p.id=${id}`)
+    const result = await this.database.query(SQL`SELECT p.* FROM products p WHERE p.id=${id}`)
 
     if (result.rows.length > 0) {
       return {
