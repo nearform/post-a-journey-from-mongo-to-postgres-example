@@ -1,0 +1,12 @@
+{
+  "events": {
+    "start": "clear"
+  },
+  "execMap": {
+    "ts": "npm start"
+  },
+  "ext": "ts",
+  "ignore": ["./node_modules/"],
+  "verbose": true,
+  "watch": ["./src/**/*.ts"]
+}

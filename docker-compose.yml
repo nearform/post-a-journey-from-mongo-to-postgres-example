@@ -1,0 +1,18 @@
+version: '3'
+services:
+  mongo:
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=journey_from_mongo_to_pg
+    image: mongo
+    ports:
+      - 27017:27017
+  poostgres:
+    container_name: poostgres
+    environment:
+      - POSTGRES_PASSWORD=root
+    image: postgres
+    ports:
+      - 5432:5432
