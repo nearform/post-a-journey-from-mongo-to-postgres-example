@@ -4,11 +4,12 @@ import { Nullable } from '../../types/nullable.type'
 import { Repository } from '../repository.interface'
 import { Client } from 'pg'
 import { Product } from '../../types/product.type'
+import { WithNoId } from '../../types/with-no-id.type'
 
 export class ProductRepository implements Repository<Product> {
   constructor(private readonly database: Client) {}
 
-  async create(product: { name: string }): Promise<Product> {
+  async create(product: WithNoId<Product>): Promise<Product> {
     const result = await this.database.query(SQL`INSERT INTO products (id, name) VALUES (${crypto.randomUUID()}, ${product.name}) RETURNING *`)
     
     return {
